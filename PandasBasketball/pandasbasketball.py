@@ -36,6 +36,28 @@ def get_player(player, stat, numeric=False, s_index=False):
         raise StatusCode404
     else:
         return player_stats(r, stat, numeric=numeric, s_index=s_index)
+    
+def get_inter_player(player, stat, numeric=False, s_index=False):
+    """
+    Returns a pandas dataframe with the player's stats.
+    \tKeyword arguments:
+    \t\tcode -- the player's url code
+    \t\tstat -- the stat table
+    \tOptional arguments:
+    \t\tnumeric -- boolean
+    \t\ts_index -- boolean\n
+    """
+
+    # Building the url and making the request
+    url = BASE_URL + f"/international/players/{player}.html"
+    r = requests.get(url)
+
+    # If the page is not found, raise the error
+    # else, return the data frame
+    if r.status_code == 404:
+        raise StatusCode404
+    else:
+        return player_stats(r, stat, numeric=numeric, s_index=s_index)
 
 def get_player_gamelog(player, season, playoffs=False):
     """
